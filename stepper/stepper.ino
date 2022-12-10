@@ -1,48 +1,25 @@
-#define A 8
-#define B 9
-#define C 10
-#define D 11
- 
-#define NUMBER_OF_STEPS_PER_REV 512
+//Includes the Arduino Stepper Library
+#include <Stepper.h>
 
-void setup(){
-  pinMode(A,OUTPUT);
-  pinMode(B,OUTPUT);
-  pinMode(C,OUTPUT);
-  pinMode(D,OUTPUT);
+// Defines the number of steps per rotation
+const int stepsPerRevolution = 2038;
+
+// Creates an instance of stepper class
+// Pins entered in sequence IN1-IN3-IN2-IN4 for proper step sequence
+Stepper myStepper = Stepper(stepsPerRevolution, 2, 4, 3, 5);
+
+void setup() {
+	// Nothing to do (Stepper Library sets pins as outputs)
 }
 
-void write(int a,int b,int c,int d){
-  digitalWrite(A,a);
-  digitalWrite(B,b);
-  digitalWrite(C,c);
-  digitalWrite(D,d);
-}
-
-void onestep(){
-  write(1,0,0,0);
-  delay(5);
-  write(1,1,0,0);
-  delay(5);
-  write(0,1,0,0);
-  delay(5);
-  write(0,1,1,0);
-  delay(5);
-  write(0,0,1,0);
-  delay(5);
-  write(0,0,1,1);
-  delay(5);
-  write(0,0,0,1);
-  delay(5);
-  write(1,0,0,1);
-  delay(5);
-}
-
-void loop(){
-  int i;
-  i=0;
-  while(i<NUMBER_OF_STEPS_PER_REV){
-    onestep();
-    i++;
-  }
+void loop() {
+	// Rotate CW slowly at 5 RPM
+	myStepper.setSpeed(5);
+	myStepper.step(stepsPerRevolution);
+	delay(1000);
+	
+	// Rotate CCW quickly at 10 RPM
+	myStepper.setSpeed(10);
+	myStepper.step(-stepsPerRevolution);
+	delay(1000);
 }
