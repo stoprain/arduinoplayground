@@ -35,4 +35,8 @@ void loop() {
 	// Move the motor one step
 	stepper1.run();
 	stepper2.run();
+
+  // digitalWrite(6, HIGH);
+  // delay(100);
+  // digitalWrite(6, LOW);
 }
