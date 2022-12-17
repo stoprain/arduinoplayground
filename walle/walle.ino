@@ -71,6 +71,8 @@ volatile double lastY = 47.5;
 
 int last_min = 0;
 
+int incomingByte = 0;
+
 void setup() 
 { 
 
@@ -79,38 +81,69 @@ void setup()
   servo2.attach(SERVOPINLEFT);  //初始化左臂舵机  left servo
   servo3.attach(SERVOPINRIGHT); //初始化右臂舵机  right servo
   delay(1000);
+  Serial.begin(9600);
 
 } 
 
 void loop() 
 { 
 
-    lift(2);//高抬笔架
-	  delay(1000);
+    // send data only when you receive data:
+  if (Serial.available() > 0) {
+    // read the incoming byte:
+    incomingByte = Serial.read();
 
-    //cal 1
-    press(2, 46, 0);
-    //cal 2
-    press(4, 34, 0);
-    //cal 3
-    press(6, 20, 1);
+    // say what you got:
+    Serial.print("I received: ");
+    Serial.println(incomingByte, DEC);
+    if (incomingByte == 48) {
+      press(50, 30, 0); // 0 login next
+    } else if (incomingByte == 49) {
+      press(49, 38, 1); // 1 forgot
+    } else if (incomingByte == 50) {
+      press(38, 30, 1); // 2 forgot next
+    } else if (incomingByte == 51) {
+      press(30, 30, 1); // 3 authflow next
+    } else if (incomingByte == 52) {
+      press(10, 30, 1); // 4 agree and continue
+    } else if (incomingByte == 53) {
+      press(11, 43, 0); // 5 passport
+    } else if (incomingByte == 54) {
+      press(32, 10, 1); // 6 permission
+    } else if (incomingByte == 55) {
+      press(28, 26, 1); // 7 manual
+    }
 
-    //cal 4
-    press(20, 50, 0);
-    //cal 5
-    press(20, 34, 0);
-    //cal 6
-    press(20, 20, 1);
+  }
 
-    //cal 7
-    press(34, 48, 0);
-    //cal 8
-    press(34, 32, 0);
-    //cal 9
-    press(34, 18, 1);
+  // Serial.println("hello from arduino!");
+  // delay(1000);
+    // lift(2);//高抬笔架
+	  // delay(1000);
 
-    //cal c
-    press(48, 50, 0);
+    // //cal 1
+    // press(2, 46, 0);
+    // //cal 2
+    // press(4, 34, 0);
+    // //cal 3
+    // press(6, 20, 1);
+
+    // //cal 4
+    // press(20, 50, 0);
+    // //cal 5
+    // press(20, 34, 0);
+    // //cal 6
+    // press(20, 20, 1);
+
+    // //cal 7
+    // press(34, 48, 0);
+    // //cal 8
+    // press(34, 32, 0);
+    // //cal 9
+    // press(34, 18, 1);
+
+    // //cal c
+    // press(48, 50, 0);
 
 } 
 
