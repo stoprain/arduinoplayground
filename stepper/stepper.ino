@@ -16,10 +16,10 @@ void loop() {
 	// Rotate CW slowly at 5 RPM
 	myStepper.setSpeed(5);
 	myStepper.step(stepsPerRevolution);
-	delay(1000);
+	// delay(1000);
 	
-	// Rotate CCW quickly at 10 RPM
-	myStepper.setSpeed(10);
-	myStepper.step(-stepsPerRevolution);
-	delay(1000);
+	// // Rotate CCW quickly at 10 RPM
+	// myStepper.setSpeed(10);
+	// myStepper.step(-stepsPerRevolution);
+	// delay(1000);
 }
